@@ -1,86 +1,101 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import csv
-import random
 import os
+import random
 
 app = Flask(__name__)
-app.secret_key = "supersecretkey"  # needed for session
+app.secret_key = "vua-lich-su-secret-key"  # required for session
 
 CSV_FILE = "questions.csv"
 TOTAL_QUESTIONS = 14
 
-# Load and shuffle questions
+
+# ========= LOAD QUESTIONS =========
 def load_questions():
     questions = []
+
     base_dir = os.path.dirname(os.path.abspath(__file__))
     file_path = os.path.join(base_dir, CSV_FILE)
+
     with open(file_path, encoding="utf-8") as f:
         reader = csv.DictReader(f)
         for row in reader:
             if not row or row.get("answer") is None:
                 continue
+
             correct_letter = row["answer"].strip().upper()
-            if correct_letter not in ("A","B","C","D"):
+            if correct_letter not in ("A", "B", "C", "D"):
                 continue
+
             options = [row["A"], row["B"], row["C"], row["D"]]
-            zipped = list(zip(options, ["A","B","C","D"]))
+
+            zipped = list(zip(options, ["A", "B", "C", "D"]))
             random.shuffle(zipped)
             shuffled_options, letters = zip(*zipped)
-            correct_index = letters.index(correct_letter)
+
             questions.append({
                 "question": row["question"],
-                "options": shuffled_options,
-                "answer": correct_index
+                "options": list(shuffled_options),
+                "answer": letters.index(correct_letter)
             })
-    return questions
 
+    random.shuffle(questions)
+    return questions[:TOTAL_QUESTIONS]
+
+
+# ========= ROUTES =========
 @app.route("/")
 def index():
-    # Initialize session
-    all_qs = load_questions()
-    session["questions"] = random.sample(all_qs, min(TOTAL_QUESTIONS, len(all_qs)))
+    session.clear()
+    session["questions"] = load_questions()
     session["index"] = 0
     session["score"] = 0
     return redirect(url_for("question"))
 
+
 @app.route("/question", methods=["GET", "POST"])
 def question():
-    if "questions" not in session:
-        return redirect(url_for("index"))
-
-    questions = session["questions"]
+    questions = session.get("questions")
     index = session.get("index", 0)
 
-    if index >= len(questions):
+    if not questions or index >= len(questions):
         return redirect(url_for("result"))
 
     q = questions[index]
+    feedback = None
+    selected = None
 
     if request.method == "POST":
-        selected = int(request.form.get("answer", -1))
+        selected = int(request.form["answer"])
         correct = q["answer"]
+
         if selected == correct:
             session["score"] += 1
-        session["selected"] = selected
-        session["correct"] = correct
-        return redirect(url_for("feedback"))
+            feedback = "correct"
+        else:
+            feedback = "wrong"
 
-    return render_template("index.html", question=q, index=index, total=len(questions))
+        session["index"] += 1
 
-@app.route("/feedback")
-def feedback():
-    index = session.get("index", 0)
-    q = session["questions"][index]
-    selected = session.get("selected", None)
-    correct = session.get("correct", None)
-    return render_template("feedback.html", question=q, selected=selected, correct=correct, index=index, total=len(session["questions"]))
+        return render_template(
+            "feedback.html",
+            question=q["question"],
+            options=q["options"],
+            selected=selected,
+            correct=correct,
+            feedback=feedback,
+            index=index + 1,
+            total=len(questions)
+        )
 
-@app.route("/next")
-def next_question():
-    session["index"] += 1
-    if session["index"] >= len(session["questions"]):
-        return redirect(url_for("result"))
-    return redirect(url_for("question"))
+    return render_template(
+        "index.html",
+        question=q["question"],
+        options=q["options"],
+        index=index + 1,
+        total=len(questions)
+    )
+
 
 @app.route("/result")
 def result():
@@ -88,5 +103,7 @@ def result():
     total = len(session.get("questions", []))
     return render_template("result.html", score=score, total=total)
 
+
+# ========= RUN =========
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000)
