@@ -4,7 +4,7 @@ import os
 import random
 
 app = Flask(__name__)
-app.secret_key = "vua-lich-su-secret-key"  # required for session
+app.secret_key = "vua-lich-su-secret-key"
 
 CSV_FILE = "questions.csv"
 TOTAL_QUESTIONS = 14
@@ -55,27 +55,22 @@ def index():
 
 @app.route("/question", methods=["GET", "POST"])
 def question():
-    questions = session.get("questions")
+    questions = session.get("questions", [])
     index = session.get("index", 0)
 
     if not questions or index >= len(questions):
         return redirect(url_for("result"))
 
     q = questions[index]
-    feedback = None
-    selected = None
 
     if request.method == "POST":
         selected = int(request.form["answer"])
         correct = q["answer"]
 
         if selected == correct:
-            session["score"] += 1
-            feedback = "correct"
-        else:
-            feedback = "wrong"
+            session["score"] = session.get("score", 0) + 1
 
-        session["index"] += 1
+        session["index"] = index + 1
 
         return render_template(
             "feedback.html",
@@ -83,7 +78,6 @@ def question():
             options=q["options"],
             selected=selected,
             correct=correct,
-            feedback=feedback,
             index=index + 1,
             total=len(questions)
         )
@@ -100,8 +94,18 @@ def question():
 @app.route("/result")
 def result():
     score = session.get("score", 0)
-    total = len(session.get("questions", []))
-    return render_template("result.html", score=score, total=total)
+    questions = session.get("questions", [])
+    total = len(questions)
+
+    # absolute safety: never crash
+    if total == 0:
+        return redirect(url_for("index"))
+
+    return render_template(
+        "result.html",
+        score=score,
+        total=total
+    )
 
 
 # ========= RUN =========
