@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Quiz</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+    <h1>👑 VUA LỊCH SỬ</h1>
+    <p class="progress">Câu {{ index+1 }} / {{ total }}</p>
+    <p class="question">{{ question['question'] }}</p>
+    <form method="POST">
+        {% for option, i in question['options']|enumerate %}
+        <button class="option-btn" type="submit" name="answer" value="{{ i }}">{{ option }}</button>
+        {% endfor %}
+    </form>
+</div>
+</body>
+</html>

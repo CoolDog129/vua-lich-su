@@ -1,0 +1,66 @@
+body {
+    font-family: "Be Vietnam Pro", sans-serif;
+    background-color: #f4f6f8;
+    color: #111827;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    width: 80%;
+    max-width: 800px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2em;
+}
+
+.progress {
+    font-size: 1em;
+    margin: 5px 0;
+}
+
+.question {
+    font-size: 1.2em;
+    margin: 15px 0;
+}
+
+.option-btn {
+    display: block;
+    width: 100%;
+    padding: 10px 20px;
+    margin: 6px 0;
+    border-radius: 18px;
+    background-color: white;
+    border: 1px solid #d1d5db;
+    font-size: 1em;
+    text-align: left;
+    cursor: pointer;
+}
+
+.option-btn.correct {
+    background-color: #a5d6a7;
+    color: #1b5e20;
+}
+
+.option-btn.wrong {
+    background-color: #ef9a9a;
+    color: #b71c1c;
+}
+
+.next-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 20px;
+    border-radius: 21px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+.next-btn:hover {
+    background-color: #45a049;
+}

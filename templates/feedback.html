@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Result</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 Hoàn thành!</h1>
+        <p id="score-text">Bạn đã hoàn thành quiz!</p>
+        <button onclick="goHome()">Quay lại trang chính</button>
+    </div>
+
+    <script>
+        // Replace these with real values passed from server or query params
+        const totalQuestions = parseInt(new URLSearchParams(window.location.search).get("total")) || 0;
+        const score = parseInt(new URLSearchParams(window.location.search).get("score")) || 0;
+
+        const scoreText = document.getElementById("score-text");
+        scoreText.textContent = `🎯 Điểm của bạn: ${score} / ${totalQuestions}`;
+
+        function goHome() {
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>
