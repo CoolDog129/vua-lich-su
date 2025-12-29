@@ -13,20 +13,11 @@
 
     <div class="question">{{ question }}</div>
 
-    <form method="post">
+    <form method="POST">
         {% for key, value in options.items() %}
-        <button
-            name="option"
-            value="{{ key }}"
-            class="option
-            {% if feedback %}
-                {% if key == correct_answer %}correct{% endif %}
-                {% if feedback == 'wrong' and key != correct_answer %}disabled{% endif %}
-            {% endif %}"
-            {% if feedback %}disabled{% endif %}
-        >
-            {{ value }}
-        </button>
+            <button class="option" name="option" value="{{ key }}">
+                {{ value }}
+            </button>
         {% endfor %}
     </form>
 </div>
