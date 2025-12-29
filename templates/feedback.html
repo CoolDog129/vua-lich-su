@@ -1,28 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <title>Quiz Result</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Kết quả</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="container">
-        <h1>🎉 Hoàn thành!</h1>
-        <p id="score-text">Bạn đã hoàn thành quiz!</p>
-        <button onclick="goHome()">Quay lại trang chính</button>
-    </div>
 
-    <script>
-        // Replace these with real values passed from server or query params
-        const totalQuestions = parseInt(new URLSearchParams(window.location.search).get("total")) || 0;
-        const score = parseInt(new URLSearchParams(window.location.search).get("score")) || 0;
+<h1>👑 VUA LỊCH SỬ</h1>
+<p>Câu {{ index }}/{{ total }}</p>
 
-        const scoreText = document.getElementById("score-text");
-        scoreText.textContent = `🎯 Điểm của bạn: ${score} / ${totalQuestions}`;
+<h2>{{ question }}</h2>
 
-        function goHome() {
-            window.location.href = "index.html";
-        }
-    </script>
+{% for opt in options %}
+  {% if loop.index0 == correct %}
+    <div class="option correct">{{ opt }}</div>
+  {% elif loop.index0 == selected %}
+    <div class="option wrong">{{ opt }}</div>
+  {% else %}
+    <div class="option">{{ opt }}</div>
+  {% endif %}
+{% endfor %}
+
+<a href="{{ url_for('question') }}" class="next">Tiếp theo ➜</a>
+
 </body>
 </html>
