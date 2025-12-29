@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <title>Kết quả</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="UTF-8">
+    <title>Đáp án</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-<h1>👑 VUA LỊCH SỬ</h1>
-<p>Câu {{ index }}/{{ total }}</p>
+<div class="card">
+    <h1>👑 VUA LỊCH SỬ</h1>
+    <div class="progress">Câu {{ current }}/{{ total }}</div>
 
-<h2>{{ question }}</h2>
+    <div class="question">{{ question }}</div>
 
-{% for opt in options %}
-  {% if loop.index0 == correct %}
-    <div class="option correct">{{ opt }}</div>
-  {% elif loop.index0 == selected %}
-    <div class="option wrong">{{ opt }}</div>
-  {% else %}
-    <div class="option">{{ opt }}</div>
-  {% endif %}
-{% endfor %}
+    {% for key, value in options.items() %}
+        <div class="option
+            {% if key == correct %}correct{% endif %}
+            {% if key == selected and key != correct %}wrong{% endif %}
+        ">
+            {{ value }}
+        </div>
+    {% endfor %}
 
-<a href="{{ url_for('question') }}" class="next">Tiếp theo ➜</a>
+    <a href="{{ url_for('next_question') }}" class="restart">Tiếp theo ➜</a>
+</div>
 
 </body>
 </html>
