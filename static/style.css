@@ -1,80 +1,83 @@
-/* Reset-ish */
-* {
-  box-sizing: border-box;
-  font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-}
-
 body {
-  margin: 0;
-  min-height: 100vh;
-  background: #f2f4f7;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    background: #f4f6f8;
+    font-family: system-ui, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
-/* Main white card */
 .card {
-  background: #ffffff;
-  width: 100%;
-  max-width: 640px;
-  padding: 32px 36px;
-  border-radius: 16px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    background: white;
+    padding: 40px;
+    width: 520px;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    text-align: center;
 }
 
-/* Title */
-.title {
-  font-size: 28px;
-  font-weight: 800;
-  margin-bottom: 6px;
+h1 {
+    margin-bottom: 10px;
 }
 
-/* Question counter */
-.counter {
-  color: #666;
-  font-size: 14px;
-  margin-bottom: 18px;
+.progress {
+    color: #6b7280;
+    margin-bottom: 20px;
 }
 
-/* Question text */
 .question {
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 24px;
-  line-height: 1.4;
+    font-size: 18px;
+    margin-bottom: 24px;
 }
 
-/* Options grid */
-.options {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
+.option {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 12px;
+    border-radius: 14px;
+    border: 1px solid #e5e7eb;
+    background: white;
+    cursor: pointer;
+    font-size: 15px;
+    text-align: left;
 }
 
-/* Option buttons */
-.option-btn {
-  padding: 14px 16px;
-  border-radius: 12px;
-  border: 2px solid #e0e0e0;
-  background: #f9fafb;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.15s ease;
+.option:hover {
+    background: #f3f4f6;
 }
 
-.option-btn:hover {
-  background: #eef4ff;
-  border-color: #4f7cff;
+.option.correct {
+    background: #a5d6a7;
+    color: #1b5e20;
+    border: none;
 }
 
-.option-btn:active {
-  transform: scale(0.98);
+.option.disabled {
+    background: #ef9a9a;
+    color: #b71c1c;
+    border: none;
 }
 
-/* Make buttons full width on small screens */
-@media (max-width: 500px) {
-  .options {
-    grid-template-columns: 1fr;
-  }
+.option:disabled {
+    cursor: default;
+}
+
+.result {
+    font-size: 18px;
+}
+
+.score {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.restart {
+    display: inline-block;
+    margin-top: 20px;
+    text-decoration: none;
+    background: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 12px;
 }
