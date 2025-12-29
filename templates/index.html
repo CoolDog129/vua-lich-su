@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Vua Lịch Sử</title>
+    <title>Đáp án</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
@@ -13,13 +13,16 @@
 
     <div class="question">{{ question }}</div>
 
-    <form method="POST">
-        {% for key, value in options.items() %}
-            <button class="option" name="option" value="{{ key }}">
-                {{ value }}
-            </button>
-        {% endfor %}
-    </form>
+    {% for key, value in options.items() %}
+        <div class="option
+            {% if key == correct %}correct{% endif %}
+            {% if key == selected and key != correct %}wrong{% endif %}
+        ">
+            {{ value }}
+        </div>
+    {% endfor %}
+
+    <a href="{{ url_for('next_question') }}" class="restart">Tiếp theo ➜</a>
 </div>
 
 </body>
