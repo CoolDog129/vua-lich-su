@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
-<meta charset="UTF-8">
-<title>Quiz</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="UTF-8">
+  <title>Vua Lịch Sử</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-<div class="container">
-    <h1>👑 VUA LỊCH SỬ</h1>
-    <p class="progress">Câu {{ index+1 }} / {{ total }}</p>
-    <p class="question">{{ question['question'] }}</p>
-    <form method="POST">
-        {% for option, i in question['options']|enumerate %}
-        <button class="option-btn" type="submit" name="answer" value="{{ i }}">{{ option }}</button>
-        {% endfor %}
-    </form>
-</div>
+
+<h1>👑 VUA LỊCH SỬ</h1>
+<p>Câu {{ index }}/{{ total }}</p>
+
+<form method="post">
+  <h2>{{ question }}</h2>
+
+  {% for opt in options %}
+    <button name="answer" value="{{ loop.index0 }}" class="option">
+      {{ opt }}
+    </button>
+  {% endfor %}
+</form>
+
 </body>
 </html>
