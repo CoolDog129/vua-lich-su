@@ -1,6 +1,7 @@
 body {
+    margin: 0;
+    font-family: "Be Vietnam Pro", sans-serif;
     background: #f4f6f8;
-    font-family: system-ui, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,75 +10,65 @@ body {
 
 .card {
     background: white;
-    padding: 40px;
-    width: 520px;
-    border-radius: 18px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-    text-align: center;
+    width: 90%;
+    max-width: 700px;
+    padding: 30px;
+    border-radius: 22px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
 
 h1 {
+    text-align: center;
     margin-bottom: 10px;
 }
 
 .progress {
+    text-align: center;
     color: #6b7280;
     margin-bottom: 20px;
 }
 
 .question {
     font-size: 18px;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
 }
 
 .option {
     display: block;
     width: 100%;
-    padding: 14px;
-    margin-bottom: 12px;
-    border-radius: 14px;
-    border: 1px solid #e5e7eb;
-    background: white;
-    cursor: pointer;
-    font-size: 15px;
     text-align: left;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    border-radius: 18px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    font-size: 16px;
+    cursor: pointer;
 }
 
 .option:hover {
     background: #f3f4f6;
 }
 
-.option.correct {
+.correct {
     background: #a5d6a7;
     color: #1b5e20;
     border: none;
 }
 
-.option.disabled {
+.wrong {
     background: #ef9a9a;
     color: #b71c1c;
     border: none;
 }
 
-.option:disabled {
-    cursor: default;
-}
-
-.result {
-    font-size: 18px;
-}
-
-.score {
-    font-size: 32px;
-    font-weight: bold;
-}
-
 .restart {
-    display: inline-block;
+    display: block;
     margin-top: 20px;
-    text-decoration: none;
+    text-align: center;
     background: #4CAF50;
     color: white;
-    padding: 12px 20px;
-    border-radius: 12px;
+    padding: 12px;
+    border-radius: 20px;
+    text-decoration: none;
 }
