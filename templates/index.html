@@ -7,18 +7,26 @@
 </head>
 <body>
 
-<h1>👑 VUA LỊCH SỬ</h1>
-<p>Câu {{ index }}/{{ total }}</p>
+  <div class="card">
+    <div class="title">👑 VUA LỊCH SỬ</div>
+    <div class="counter">Câu {{ current }}/{{ total }}</div>
 
-<form method="post">
-  <h2>{{ question }}</h2>
+    <div class="question">
+      {{ question }}
+    </div>
 
-  {% for opt in options %}
-    <button name="answer" value="{{ loop.index0 }}" class="option">
-      {{ opt }}
-    </button>
-  {% endfor %}
-</form>
+    <form method="post" class="options">
+      {% for key, value in options.items() %}
+        <button
+          type="submit"
+          name="answer"
+          value="{{ key }}"
+          class="option-btn">
+          {{ value }}
+        </button>
+      {% endfor %}
+    </form>
+  </div>
 
 </body>
 </html>
